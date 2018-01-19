@@ -9,25 +9,24 @@
  *
  */
 
-
 namespace Konekt\NavInvoiceXml\Tests;
-
 
 use DateTime;
 use Konekt\NavInvoiceXml\Dto\Invoice;
-use Konekt\NavInvoiceXml\Dto\InvoiceType;
+use Konekt\NavInvoiceXml\Enums\InvoiceType;
 use PHPUnit\Framework\TestCase;
 
 class InvoiceDtoTest extends TestCase
 {
+    /** @var Invoice */
+    private $invoice;
+
     /**
      * @test
      */
     public function it_can_be_created()
     {
-        $invoice = new Invoice();
-
-        $this->assertInstanceOf(Invoice::class, $invoice);
+        $this->assertInstanceOf(Invoice::class, $this->invoice);
     }
 
     /**
@@ -35,18 +34,40 @@ class InvoiceDtoTest extends TestCase
      */
     public function it_has_all_necessary_fields()
     {
-        $invoice = new Invoice();
-
-        $this->assertObjectHasAttribute('number', $invoice);
-
-        $this->assertObjectHasAttribute('type', $invoice);
-        $this->assertInstanceOf(InvoiceType::class, $invoice->type);
-
-        $this->assertObjectHasAttribute('issuedOn', $invoice);
-        $this->assertInstanceOf(DateTime::class, $invoice->issuedOn);
-
-        $this->assertObjectHasAttribute('dueOn', $invoice);
-        $this->assertInstanceOf(DateTime::class, $invoice->dueOn);
+        $this->assertObjectHasAttribute('number', $this->invoice);
+        $this->assertObjectHasAttribute('type', $this->invoice);
+        $this->assertObjectHasAttribute('issuedOn', $this->invoice);
+        $this->assertObjectHasAttribute('fulfillmentOn', $this->invoice);
+        $this->assertObjectHasAttribute('dueOn', $this->invoice);
+        $this->assertObjectHasAttribute('bankAccountNumber', $this->invoice);
+        $this->assertObjectHasAttribute('currency', $this->invoice);
+        $this->assertObjectHasAttribute('paymentMethod', $this->invoice);
     }
 
+    /**
+     * @test
+     */
+    public function it_returns_the_proper_types()
+    {
+        $this->assertInternalType('string', $this->invoice->getNumber());
+        $this->assertInstanceOf(InvoiceType::class, $this->invoice->getType());
+        $this->assertInstanceOf(DateTime::class, $this->invoice->getIssuedOn());
+        $this->assertInstanceOf(DateTime::class, $this->invoice->getFulfillmentOn());
+        $this->assertInstanceOf(DateTime::class, $this->invoice->getDueOn());
+        $this->assertTrue(is_string($this->invoice->getBankAccountNumber()) || is_null($this->invoice->getBankAccountNumber()));
+        $this->assertTrue(is_string($this->invoice->getPaymentMethod()) || is_null($this->invoice->getPaymentMethod()));
+        $this->assertInternalType('string', $this->invoice->getCurrency());
+    }
+
+    protected function setUp()
+    {
+        $this->invoice = new Invoice(
+            'HUF-00000001',
+            InvoiceType::INVOICE(),
+            new DateTime(),
+            new DateTime(),
+            new DateTime(),
+            'HUF'
+        );
+    }
 }
