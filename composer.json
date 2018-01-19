@@ -1,0 +1,34 @@
+{
+    "name": "konekt/nav-hungary-invoice-xml",
+    "description": "Library for generating NAV Hungary Invoice Export XML",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["hungary", "invoice", "billing", "konekt", "artkonekt"],
+    "support": {
+        "source": "https://github.com/artkonekt/nav-hungary-invoice-xml"
+    },
+    "authors": [
+        {
+            "name": "Attila Fulop",
+            "homepage": "https://github.com/fulopattila122"
+        },
+        {
+            "name": "Hunor Kedves",
+            "homepage": "https://github.com/kedves"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.3"
+    },
+    "autoload": {
+        "psr-4": { "Konekt\\NavInvoiceXml\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Konekt\\NavInvoiceXml\\Tests\\": "tests/"
+        }
+    }
+}
