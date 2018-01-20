@@ -5,7 +5,7 @@
 <phpunit colors="true"
          bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name="Konekt Nav Hungary XML Unit Test Suite">
+        <testsuite name="Vanvo NAV Hungary XML Unit Test Suite">
             <directory suffix=".php">./tests</directory>
         </testsuite>
     </testsuites>
