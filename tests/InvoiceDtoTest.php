@@ -12,14 +12,24 @@
 namespace Vanvo\NavInvoiceXml\Tests;
 
 use DateTime;
-use Vanvo\NavInvoiceXml\Dto\Invoice;
-use Vanvo\NavInvoiceXml\Enums\InvoiceType;
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\Invoice;
+use Vanvo\NavInvoiceXml\Dto\InvoiceType;
 
 class InvoiceDtoTest extends TestCase
 {
     /** @var Invoice */
     private $invoice;
+
+    protected function setUp()
+    {
+        $this->invoice = new Invoice(
+            'HUF-00000001',
+            InvoiceType::INVOICE(),
+            new DateTime(),
+            new DateTime()
+        );
+    }
 
     /**
      * @test
@@ -38,10 +48,6 @@ class InvoiceDtoTest extends TestCase
         $this->assertObjectHasAttribute('type', $this->invoice);
         $this->assertObjectHasAttribute('issuedOn', $this->invoice);
         $this->assertObjectHasAttribute('fulfillmentOn', $this->invoice);
-        $this->assertObjectHasAttribute('dueOn', $this->invoice);
-        $this->assertObjectHasAttribute('bankAccountNumber', $this->invoice);
-        $this->assertObjectHasAttribute('currency', $this->invoice);
-        $this->assertObjectHasAttribute('paymentMethod', $this->invoice);
     }
 
     /**
@@ -53,21 +59,5 @@ class InvoiceDtoTest extends TestCase
         $this->assertInstanceOf(InvoiceType::class, $this->invoice->getType());
         $this->assertInstanceOf(DateTime::class, $this->invoice->getIssuedOn());
         $this->assertInstanceOf(DateTime::class, $this->invoice->getFulfillmentOn());
-        $this->assertInstanceOf(DateTime::class, $this->invoice->getDueOn());
-        $this->assertTrue(is_string($this->invoice->getBankAccountNumber()) || is_null($this->invoice->getBankAccountNumber()));
-        $this->assertTrue(is_string($this->invoice->getPaymentMethod()) || is_null($this->invoice->getPaymentMethod()));
-        $this->assertInternalType('string', $this->invoice->getCurrency());
-    }
-
-    protected function setUp()
-    {
-        $this->invoice = new Invoice(
-            'HUF-00000001',
-            InvoiceType::INVOICE(),
-            new DateTime(),
-            new DateTime(),
-            new DateTime(),
-            'HUF'
-        );
     }
 }

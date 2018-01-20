@@ -12,7 +12,7 @@
 namespace Vanvo\NavInvoiceXml\Models;
 
 use Vanvo\NavInvoiceXml\Dto\Invoice;
-use Vanvo\NavInvoiceXml\Dto\Person;
+use Vanvo\NavInvoiceXml\Dto\Partner;
 
 abstract class AbstractWriter
 {
@@ -53,20 +53,20 @@ abstract class AbstractWriter
     /**
      * Adds the issuer to the buffer.
      *
-     * @param Person $issuer
+     * @param Partner $issuer
      *
      * @return AbstractWriter
      */
-    abstract public function addIssuer(Person $issuer): AbstractWriter;
+    abstract public function addIssuer(Partner $issuer): AbstractWriter;
 
     /**
      * Adds the customer to the buffer.
      *
-     * @param Person $customer
+     * @param Partner $customer
      *
      * @return AbstractWriter
      */
-    abstract public function addCustomer(Person $customer): AbstractWriter;
+    abstract public function addCustomer(Partner $customer): AbstractWriter;
 
     /**
      * Adds the invoice to the buffer.

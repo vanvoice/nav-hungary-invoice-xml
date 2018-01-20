@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the Person class.
+ * Contains the Partner class.
  *
  * @copyright   Copyright (c) 2018 Storm Storez Srl-d
  * @author      Hunor Kedves
@@ -11,7 +11,7 @@
 
 namespace Vanvo\NavInvoiceXml\Dto;
 
-class Person
+class Partner
 {
     /** @var string */
     protected $name;
@@ -22,23 +22,18 @@ class Person
     /** @var string */
     protected $taxNumberIntl;
 
-    /** @var Address */
-    protected $address;
-
     /**
-     * Person constructor.
+     * Partner constructor.
      *
-     * @param string  $name
-     * @param string  $taxNumber
-     * @param string  $taxNumberIntl
-     * @param Address $address
+     * @param string $name
+     * @param string $taxNumber
+     * @param string $taxNumberIntl
      */
-    public function __construct(string $name, Address $address, string $taxNumber, string $taxNumberIntl = null)
+    public function __construct(string $name, string $taxNumber, string $taxNumberIntl = null)
     {
         $this->name          = $name;
         $this->taxNumber     = $taxNumber;
         $this->taxNumberIntl = $taxNumberIntl;
-        $this->address       = $address;
     }
 
     /**
@@ -63,13 +58,5 @@ class Person
     public function getTaxNumberIntl(): ?string
     {
         return $this->taxNumberIntl;
-    }
-
-    /**
-     * @return Address
-     */
-    public function getAddress(): Address
-    {
-        return $this->address;
     }
 }

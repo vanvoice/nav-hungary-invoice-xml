@@ -11,19 +11,10 @@
 
 namespace Vanvo\NavInvoiceXml\Dto;
 
-class VatSummary
+class VatSummary extends PriceSummary
 {
     /** @var int */
     protected $vatRate;
-
-    /** @var float */
-    protected $netTotal;
-
-    /** @var float */
-    protected $taxTotal;
-
-    /** @var float */
-    protected $grossTotal;
 
     /**
      * VatSummary constructor.
@@ -35,10 +26,9 @@ class VatSummary
      */
     public function __construct(int $vatRate, float $netTotal, float $taxTotal, float $grossTotal)
     {
-        $this->vatRate    = $vatRate;
-        $this->netTotal   = $netTotal;
-        $this->taxTotal   = $taxTotal;
-        $this->grossTotal = $grossTotal;
+        parent::__construct($netTotal, $taxTotal, $grossTotal);
+
+        $this->vatRate = $vatRate;
     }
 
     /**
@@ -47,29 +37,5 @@ class VatSummary
     public function getVatRate(): int
     {
         return $this->vatRate;
-    }
-
-    /**
-     * @return float
-     */
-    public function getNetTotal(): float
-    {
-        return $this->netTotal;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTaxTotal(): float
-    {
-        return $this->taxTotal;
-    }
-
-    /**
-     * @return float
-     */
-    public function getGrossTotal(): float
-    {
-        return $this->grossTotal;
     }
 }

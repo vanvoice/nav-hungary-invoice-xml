@@ -9,7 +9,7 @@
  *
  */
 
-namespace Vanvo\NavInvoiceXml\Enums;
+namespace Vanvo\NavInvoiceXml\Dto;
 
 use Konekt\Enum\Enum;
 

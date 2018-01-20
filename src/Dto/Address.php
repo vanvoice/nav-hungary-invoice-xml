@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the XmlAddress class.
+ * Contains the AddressXml class.
  *
  * @copyright   Copyright (c) 2018 Storm Storez Srl-d
  * @author      Hunor Kedves
@@ -44,7 +44,7 @@ class Address
     protected $door;
 
     /**
-     * XmlAddress constructor.
+     * AddressXml constructor.
      *
      * @param string $zip
      * @param string $city

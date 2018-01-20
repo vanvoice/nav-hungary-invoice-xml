@@ -12,13 +12,29 @@
 
 namespace Vanvo\NavInvoiceXml\Tests;
 
-use Vanvo\NavInvoiceXml\Dto\Address;
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\Address;
 
 class AddressDtoTest extends TestCase
 {
     /** @var Address */
     private $address;
+
+    protected function setUp()
+    {
+        $this->address = new Address(
+            '535500',
+            'Budapest',
+            'V',
+            'Petofi Sandor',
+            'lakopark',
+            '12',
+            '1',
+            '2',
+            '3',
+            '25'
+        );
+    }
 
     /**
      * @test
@@ -60,21 +76,5 @@ class AddressDtoTest extends TestCase
         $this->assertInternalType('string', $this->address->getStair());
         $this->assertInternalType('string', $this->address->getLevel());
         $this->assertInternalType('string', $this->address->getDoor());
-    }
-
-    protected function setUp()
-    {
-        $this->address = new Address(
-            '535500',
-            'Budapest',
-            'V',
-            'Petofi Sandor',
-            'lakopark',
-            '12',
-            '1',
-            '2',
-            '3',
-            '25'
-        );
     }
 }

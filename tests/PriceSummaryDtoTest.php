@@ -12,13 +12,22 @@
 
 namespace Vanvo\NavInvoiceXml\Tests;
 
-use Vanvo\NavInvoiceXml\Dto\PriceSummary;
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\PriceSummary;
 
 class PriceSummaryDtoTest extends TestCase
 {
     /** @var PriceSummary */
     private $priceSummary;
+
+    protected function setUp()
+    {
+        $this->priceSummary = new PriceSummary(
+            13,
+            10.27,
+            23.27
+        );
+    }
 
     /**
      * @test
@@ -46,14 +55,5 @@ class PriceSummaryDtoTest extends TestCase
         $this->assertInternalType('float', $this->priceSummary->getNetTotal());
         $this->assertInternalType('float', $this->priceSummary->getTaxTotal());
         $this->assertInternalType('float', $this->priceSummary->getGrossTotal());
-    }
-
-    protected function setUp()
-    {
-        $this->priceSummary = new PriceSummary(
-            13,
-            10.27,
-            23.27
-        );
     }
 }

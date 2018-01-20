@@ -12,13 +12,23 @@
 
 namespace Vanvo\NavInvoiceXml\Tests;
 
-use Vanvo\NavInvoiceXml\Dto\VatSummary;
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\VatSummary;
 
 class VatSummaryDtoTest extends TestCase
 {
     /** @var VatSummary */
     private $vatSummary;
+
+    protected function setUp()
+    {
+        $this->vatSummary = new VatSummary(
+            10,
+            15,
+            1.5,
+            16.5
+        );
+    }
 
     /**
      * @test
@@ -48,15 +58,5 @@ class VatSummaryDtoTest extends TestCase
         $this->assertInternalType('float', $this->vatSummary->getTaxTotal());
         $this->assertInternalType('float', $this->vatSummary->getGrossTotal());
         $this->assertInternalType('int', $this->vatSummary->getVatRate());
-    }
-
-    protected function setUp()
-    {
-        $this->vatSummary = new VatSummary(
-            10,
-            15,
-            1.5,
-            16.5
-        );
     }
 }

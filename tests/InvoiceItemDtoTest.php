@@ -12,13 +12,29 @@
 
 namespace Vanvo\NavInvoiceXml\Tests;
 
-use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
 
 class InvoiceItemDtoTest extends TestCase
 {
     /** @var InvoiceItem */
     private $invoiceItem;
+
+    protected function setUp()
+    {
+        $this->invoiceItem = new InvoiceItem(
+            'Kakaos csiga',
+            '25',
+            1.5,
+            'kg',
+            false,
+            13,
+            19.5,
+            0.97,
+            20.475,
+            5
+        );
+    }
 
     /**
      * @test
@@ -60,21 +76,5 @@ class InvoiceItemDtoTest extends TestCase
         $this->assertInternalType('float', $this->invoiceItem->getTaxTotal());
         $this->assertInternalType('float', $this->invoiceItem->getGrossTotal());
         $this->assertInternalType('int', $this->invoiceItem->getVatRate());
-    }
-
-    protected function setUp()
-    {
-        $this->invoiceItem = new InvoiceItem(
-            'Kakaos csiga',
-            '25',
-            1.5,
-            'kg',
-            false,
-            13,
-            19.5,
-            0.97,
-            20.475,
-            5
-        );
     }
 }
