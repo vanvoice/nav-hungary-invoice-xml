@@ -10,10 +10,10 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
-use Konekt\NavInvoiceXml\Dto\Address;
-use Konekt\NavInvoiceXml\Dto\Person;
+use Vanvo\NavInvoiceXml\Dto\Address;
+use Vanvo\NavInvoiceXml\Dto\Person;
 use PHPUnit\Framework\TestCase;
 
 class CompanyDtoTest extends TestCase

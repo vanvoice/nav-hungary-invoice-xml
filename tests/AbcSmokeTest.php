@@ -10,7 +10,7 @@
  */
 
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
 use PHPUnit\Framework\TestCase;
 

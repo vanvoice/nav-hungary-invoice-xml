@@ -10,9 +10,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
-use Konekt\NavInvoiceXml\Dto\InvoiceItem;
+use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
 use PHPUnit\Framework\TestCase;
 
 class InvoiceItemDtoTest extends TestCase

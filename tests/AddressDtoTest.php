@@ -10,9 +10,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
-use Konekt\NavInvoiceXml\Dto\Address;
+use Vanvo\NavInvoiceXml\Dto\Address;
 use PHPUnit\Framework\TestCase;
 
 class AddressDtoTest extends TestCase

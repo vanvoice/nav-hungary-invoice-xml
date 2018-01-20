@@ -9,10 +9,10 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
-use Konekt\NavInvoiceXml\Models\XmlWriter;
-use Konekt\NavInvoiceXml\Services\Exporter;
+use Vanvo\NavInvoiceXml\Models\XmlWriter;
+use Vanvo\NavInvoiceXml\Services\Exporter;
 use PHPUnit\Framework\TestCase;
 
 class ExportServiceTest extends TestCase

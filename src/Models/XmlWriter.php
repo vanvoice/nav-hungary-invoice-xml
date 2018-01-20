@@ -9,11 +9,11 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Models;
+namespace Vanvo\NavInvoiceXml\Models;
 
-use Konekt\NavInvoiceXml\Dto\Address;
-use Konekt\NavInvoiceXml\Dto\Invoice;
-use Konekt\NavInvoiceXml\Dto\Person;
+use Vanvo\NavInvoiceXml\Dto\Address;
+use Vanvo\NavInvoiceXml\Dto\Invoice;
+use Vanvo\NavInvoiceXml\Dto\Person;
 
 class XmlWriter extends AbstractWriter
 {

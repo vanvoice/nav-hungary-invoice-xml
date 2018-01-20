@@ -9,7 +9,7 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Dto;
+namespace Vanvo\NavInvoiceXml\Dto;
 
 class Person
 {

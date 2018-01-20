@@ -9,11 +9,11 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
 use DateTime;
-use Konekt\NavInvoiceXml\Dto\Invoice;
-use Konekt\NavInvoiceXml\Enums\InvoiceType;
+use Vanvo\NavInvoiceXml\Dto\Invoice;
+use Vanvo\NavInvoiceXml\Enums\InvoiceType;
 use PHPUnit\Framework\TestCase;
 
 class InvoiceDtoTest extends TestCase

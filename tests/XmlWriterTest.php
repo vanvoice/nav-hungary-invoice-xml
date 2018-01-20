@@ -9,11 +9,11 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
-use Konekt\NavInvoiceXml\Dto\Address;
-use Konekt\NavInvoiceXml\Dto\Person;
-use Konekt\NavInvoiceXml\Models\XmlWriter;
+use Vanvo\NavInvoiceXml\Dto\Address;
+use Vanvo\NavInvoiceXml\Dto\Person;
+use Vanvo\NavInvoiceXml\Models\XmlWriter;
 use PHPUnit\Framework\TestCase;
 
 class XmlWriterTest extends TestCase

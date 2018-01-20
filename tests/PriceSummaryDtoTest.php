@@ -10,9 +10,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Tests;
+namespace Vanvo\NavInvoiceXml\Tests;
 
-use Konekt\NavInvoiceXml\Dto\PriceSummary;
+use Vanvo\NavInvoiceXml\Dto\PriceSummary;
 use PHPUnit\Framework\TestCase;
 
 class PriceSummaryDtoTest extends TestCase

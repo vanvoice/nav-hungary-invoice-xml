@@ -9,9 +9,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Dto;
+namespace Vanvo\NavInvoiceXml\Dto;
 
-use Konekt\NavInvoiceXml\Enums\InvoiceType;
+use Vanvo\NavInvoiceXml\Enums\InvoiceType;
 
 class Invoice
 {

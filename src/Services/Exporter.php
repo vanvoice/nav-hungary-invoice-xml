@@ -9,9 +9,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Services;
+namespace Vanvo\NavInvoiceXml\Services;
 
-use Konekt\NavInvoiceXml\Models\AbstractWriter;
+use Vanvo\NavInvoiceXml\Models\AbstractWriter;
 
 class Exporter
 {

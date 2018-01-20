@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the InvoiceType.php class.
+ * Contains the InvoiceType class.
  *
  * @copyright   Copyright (c) 2017 Attila Fulop
  * @author      Attila Fulop
@@ -9,7 +9,7 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Enums;
+namespace Vanvo\NavInvoiceXml\Enums;
 
 use Konekt\Enum\Enum;
 

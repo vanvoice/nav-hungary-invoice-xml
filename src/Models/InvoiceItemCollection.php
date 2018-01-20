@@ -9,9 +9,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Models;
+namespace Vanvo\NavInvoiceXml\Models;
 
-use Konekt\NavInvoiceXml\Dto\InvoiceItem;
+use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
 
 class InvoiceItemCollection implements \IteratorAggregate
 {

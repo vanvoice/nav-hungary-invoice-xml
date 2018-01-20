@@ -9,9 +9,9 @@
  *
  */
 
-namespace Konekt\NavInvoiceXml\Models;
+namespace Vanvo\NavInvoiceXml\Models;
 
-use Konekt\NavInvoiceXml\Dto\VatSummary;
+use Vanvo\NavInvoiceXml\Dto\VatSummary;
 
 class VatSummaryCollection implements \IteratorAggregate
 {
