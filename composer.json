@@ -1,11 +1,11 @@
 {
-    "name": "konekt/nav-hungary-invoice-xml",
+    "name": "vanvo/nav-hungary-invoice-xml",
     "description": "Library for generating NAV Hungary Invoice Export XML",
     "type": "library",
     "license": "MIT",
-    "keywords": ["hungary", "invoice", "billing", "konekt", "artkonekt"],
+    "keywords": ["hungary", "invoice", "billing", "vanvo"],
     "support": {
-        "source": "https://github.com/artkonekt/nav-hungary-invoice-xml"
+        "source": "https://github.com/vanvoice/nav-hungary-invoice-xml"
     },
     "authors": [
         {
@@ -25,11 +25,11 @@
         "phpunit/phpunit": "~6.3"
     },
     "autoload": {
-        "psr-4": { "Konekt\\NavInvoiceXml\\": "src/" }
+        "psr-4": { "Vanvo\\NavInvoiceXml\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": {
-            "Konekt\\NavInvoiceXml\\Tests\\": "tests/"
+            "Vanvo\\NavInvoiceXml\\Tests\\": "tests/"
         }
     }
 }

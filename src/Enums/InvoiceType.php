@@ -24,7 +24,7 @@ class InvoiceType extends Enum
     static protected $labels = [
         self::INVOICE             => 'számla',
         self::MODIFY_INVOICE      => 'módosító számla',
-        self::INVALID_INVOICE     => 'érvénytelenitő számla',
+        self::INVALID_INVOICE     => 'érvénytelenítő számla',
         self::COLLECTABLE_INVOICE => 'gyűjtőszámla',
         self::DOCUMENT_AS_INVOICE => 'számlával egy tekintet alá eső okirat'
     ];
