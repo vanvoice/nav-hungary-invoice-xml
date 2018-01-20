@@ -21,7 +21,7 @@ class InvoiceType extends Enum
     const COLLECTABLE_INVOICE = 4;
     const DOCUMENT_AS_INVOICE = 5;
 
-    static protected $labels = [
+    protected static $labels = [
         self::INVOICE             => 'számla',
         self::MODIFY_INVOICE      => 'módosító számla',
         self::INVALID_INVOICE     => 'érvénytelenítő számla',
