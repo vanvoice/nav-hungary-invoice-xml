@@ -13,17 +13,10 @@ namespace Vanvo\NavInvoiceXml\Models;
 
 use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
 
-class InvoiceItemCollection implements \IteratorAggregate
+class InvoiceItemCollection extends Collection
 {
-    private $items;
-
     public function __construct(InvoiceItem ...$items)
     {
         $this->items = $items;
-    }
-
-    public function getIterator()
-    {
-        new \ArrayIterator($this->items);
     }
 }

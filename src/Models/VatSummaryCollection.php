@@ -13,17 +13,10 @@ namespace Vanvo\NavInvoiceXml\Models;
 
 use Vanvo\NavInvoiceXml\Dto\VatSummary;
 
-class VatSummaryCollection implements \IteratorAggregate
+class VatSummaryCollection extends Collection
 {
-    private $items;
-
     public function __construct(VatSummary ...$items)
     {
         $this->items = $items;
-    }
-
-    public function getIterator()
-    {
-        new \ArrayIterator($this->items);
     }
 }
