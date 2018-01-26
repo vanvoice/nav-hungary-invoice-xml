@@ -20,52 +20,54 @@ use Vanvo\NavInvoiceXml\Dto\Misc;
 use Vanvo\NavInvoiceXml\Dto\Partner;
 use Vanvo\NavInvoiceXml\Dto\PriceSummary;
 use Vanvo\NavInvoiceXml\Dto\VatSummary;
-use Vanvo\NavInvoiceXml\Models\ExportEntryCollection;
-use Vanvo\NavInvoiceXml\Models\InvoiceItemCollection;
-use Vanvo\NavInvoiceXml\Models\VatSummaryCollection;
+use Vanvo\NavInvoiceXml\InvoiceCollection;
+use Vanvo\NavInvoiceXml\InvoiceItemCollection;
+use Vanvo\NavInvoiceXml\VatSummaryCollection;
 use Vanvo\NavInvoiceXml\Service\Export;
-use Vanvo\NavInvoiceXml\Service\ExportEntry;
 
 class ExportTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_can_export_the_xml()
+    private $invoice;
+
+    protected function setUp()
     {
-        $date    = new \DateTime();
-        $invoice = new Invoice('12345', InvoiceType::INVOICE(), $date, $date);
-
-        $issuer        = new Partner('Test Elek', 'HU999');
-        $issuerAddress = new Address(
-            '535500',
-            'Budapest',
-            'V',
-            'Petofi Sandor',
-            'lakopark',
-            '12',
-            '1',
-            '2',
-            '3',
-            '25'
+        $issuer = new Partner(
+            'Test Elek',
+            '123456789',
+            null,
+            new Address(
+                '11111',
+                'Siofok',
+                '1',
+                'Uj utca',
+                'negyed',
+                '1',
+                '1',
+                '2',
+                '1',
+                '1'
+            )
         );
 
-
-        $customer        = new Partner('Vanvo', '8888');
-        $customerAddress = new Address(
-            '22340',
-            'Pecs',
-            '2',
-            'Ady Endre',
-            'negyed',
-            '1',
-            '41',
-            '5',
-            '7',
-            '225'
+        $customer = new Partner(
+            'Artkonekt',
+            'J/1234252222',
+            null,
+            new Address(
+                '535500',
+                'Budapest',
+                'V',
+                'Petofi Sandor',
+                'lakopark',
+                '12',
+                '1',
+                '2',
+                '3',
+                '25'
+            )
         );
 
-        $itemOne = new InvoiceItem(
+        $invoiceItem = new InvoiceItem(
             'Kakaos csiga',
             '25',
             1.5,
@@ -74,60 +76,40 @@ class ExportTest extends TestCase
             13,
             19.5,
             0.97,
-            20.475,
+            //TODO: if there are more decimals then 2 this is invalid based on xsd
+            20.47,
             5
         );
 
-        $itemTwo = new InvoiceItem(
-            'Dios csiga',
-            '25',
-            1.5,
-            'kg',
-            false,
-            11,
-            12.5,
-            0.85,
-            15.475,
-            2
-        );
-
-        $vatSummaryOne = new VatSummary(
-            22,
+        $vatSummary = new VatSummary(
+            10,
             15,
             1.5,
             16.5
         );
 
-        $vatSummaryTwo = new VatSummary(
-            24,
-            2,
-            1.5,
-            13.45
-        );
-
-        $entry = new ExportEntry(
-            $invoice,
+        $this->invoice = new Invoice(
+            '1234',
+            InvoiceType::INVOICE(),
+            new \DateTime(),
+            new \DateTime(),
             $issuer,
-            $issuerAddress,
             $customer,
-            $customerAddress,
-            new InvoiceItemCollection($itemOne, $itemTwo),
-            new Misc(new \DateTime(), 'cash', null, 'HUF12345'),
-            new VatSummaryCollection($vatSummaryOne, $vatSummaryTwo),
-            new PriceSummary(13, 10.27, 23.27)
+            new InvoiceItemCollection($invoiceItem, $invoiceItem),
+            new VatSummaryCollection($vatSummary, $vatSummary),
+            new PriceSummary(13, 10.27, 23.27),
+            new Misc(new \DateTime(), 'cash', null, 'HUF12345')
         );
+    }
 
-        $export = new Export(new ExportEntryCollection($entry, $entry));
-        $export->build();
+    /**
+     * @test
+     */
+    public function it_exports_the_properly_structured_xml()
+    {
+        $export = new Export(new InvoiceCollection($this->invoice, $this->invoice));
+        $export = $export->build();
 
-        $this->assertInternalType('string', $export->getXml());
-
-        $this->assertContains('<adokulcs>24</adokulcs>', $export->getXml());
-        $this->assertContains('<adokulcs>22</adokulcs>', $export->getXml());
-        $this->assertContains("<export_szla_db>2</export_szla_db>", $export->getXml());
-        $this->assertContains("<kezdo_ido>{$date->format('Y-m-d')}</kezdo_ido>", $export->getXml());
-        $this->assertContains("<zaro_ido>{$date->format('Y-m-d')}</zaro_ido>", $export->getXml());
-        $this->assertContains("<kezdo_szla_szam>12345</kezdo_szla_szam>", $export->getXml());
-        $this->assertContains("<zaro_szla_szam>12345</zaro_szla_szam>", $export->getXml());
+        $this->assertTrue($export->getDocument()->schemaValidate(__DIR__ . '/Schema/23_2014_szamlasema.xsd'));
     }
 }

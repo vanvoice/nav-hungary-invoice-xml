@@ -13,7 +13,7 @@ namespace Vanvo\NavInvoiceXml\Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
 use Vanvo\NavInvoiceXml\Dto\Misc;
-use Vanvo\NavInvoiceXml\Models\Xml\MiscXml;
+use Vanvo\NavInvoiceXml\MiscXml;
 
 class MiscTest extends TestCase
 {
@@ -30,11 +30,9 @@ class MiscTest extends TestCase
             '123435IBAN'
         );
 
-        $xml = new MiscXml($misc);
+        $xml = MiscXml::createXml($misc)->getDocument()->saveXML();
 
-        $this->assertContains('<fiz_hatarido>2018-04-14</fiz_hatarido>', $xml->getXml());
-        $this->assertContains('<fiz_mod></fiz_mod>', $xml->getXml());
-        $this->assertContains('<penznem></penznem>', $xml->getXml());
-        $this->assertContains('<befogado_bankszla>123435IBAN</befogado_bankszla>', $xml->getXml());
+        $this->assertContains('<fiz_hatarido>2018-04-14</fiz_hatarido>', $xml);
+        $this->assertContains('<befogado_bankszla>123435IBAN</befogado_bankszla>', $xml);
     }
 }

@@ -12,8 +12,9 @@
 namespace Vanvo\NavInvoiceXml\Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\Address;
 use Vanvo\NavInvoiceXml\Dto\Partner;
-use Vanvo\NavInvoiceXml\Models\Xml\PartnerXml;
+use Vanvo\NavInvoiceXml\PartnerXml;
 
 class PartnerTest extends TestCase
 {
@@ -22,16 +23,29 @@ class PartnerTest extends TestCase
      */
     public function it_return_the_proper_xml()
     {
+        $address = new Address(
+            '1',
+            '1',
+            '1',
+            '1',
+            '1',
+            '1',
+            '1',
+            '1',
+            '1',
+            '1'
+        );
+
         $partner = new Partner(
             'Test Elek',
             '1113',
-            null
+            null,
+            $address
         );
 
-        $xml = new PartnerXml($partner);
+        $xml = PartnerXml::createXml($partner)->getDocument()->saveXML();
 
-        $this->assertContains('<adoszam>1113</adoszam>', $xml->getXml());
-        $this->assertContains('<kozadoszam></kozadoszam>', $xml->getXml());
-        $this->assertContains('<nev>Test Elek</nev>', $xml->getXml());
+        $this->assertContains('<adoszam xmlns="http://schemas.nav.gov.hu/2013/szamla">1113</adoszam>', $xml);
+        $this->assertContains('<nev xmlns="http://schemas.nav.gov.hu/2013/szamla">Test Elek</nev>', $xml);
     }
 }

@@ -12,7 +12,7 @@
 namespace Vanvo\NavInvoiceXml\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Vanvo\NavInvoiceXml\Models\Collection;
+use Vanvo\NavInvoiceXml\Collection;
 
 class CollectionTest extends TestCase
 {

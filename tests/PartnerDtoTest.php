@@ -13,6 +13,7 @@
 namespace Vanvo\NavInvoiceXml\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Vanvo\NavInvoiceXml\Dto\Address;
 use Vanvo\NavInvoiceXml\Dto\Partner;
 
 class PartnerDtoTest extends TestCase
@@ -22,9 +23,23 @@ class PartnerDtoTest extends TestCase
 
     protected function setUp()
     {
+
         $this->partner = new Partner(
             'Artkonekt',
-            'J/1234'
+            'J/1234',
+            null,
+            new Address(
+                '535500',
+                'Budapest',
+                'V',
+                'Petofi Sandor',
+                'lakopark',
+                '12',
+                '1',
+                '2',
+                '3',
+                '25'
+            )
         );
     }
 
@@ -44,6 +59,7 @@ class PartnerDtoTest extends TestCase
         $this->assertObjectHasAttribute('name', $this->partner);
         $this->assertObjectHasAttribute('taxNumber', $this->partner);
         $this->assertObjectHasAttribute('taxNumberIntl', $this->partner);
+        $this->assertObjectHasAttribute('address', $this->partner);
     }
 
     /**
@@ -54,5 +70,6 @@ class PartnerDtoTest extends TestCase
         $this->assertInternalType('string', $this->partner->getName());
         $this->assertInternalType('string', $this->partner->getTaxNumber());
         $this->assertTrue(is_string($this->partner->getTaxNumberIntl()) || is_null($this->partner->getTaxNumberIntl()));
+        $this->assertInstanceOf(Address::class, $this->partner->getAddress());
     }
 }

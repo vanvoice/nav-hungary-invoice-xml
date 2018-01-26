@@ -11,81 +11,93 @@
 
 namespace Vanvo\NavInvoiceXml\Service;
 
-use Vanvo\NavInvoiceXml\Models\ExportEntryCollection;
-use Vanvo\NavInvoiceXml\Models\Xml\AddressXml;
-use Vanvo\NavInvoiceXml\Models\Xml\InvoiceItemXml;
-use Vanvo\NavInvoiceXml\Models\Xml\InvoiceXml;
-use Vanvo\NavInvoiceXml\Models\Xml\MiscXml;
-use Vanvo\NavInvoiceXml\Models\Xml\PartnerXml;
-use Vanvo\NavInvoiceXml\Models\Xml\PriceSummaryXml;
-use Vanvo\NavInvoiceXml\Models\Xml\VatSummaryXml;
-use Vanvo\NavInvoiceXml\Models\Xml\Xml;
+use Vanvo\NavInvoiceXml\Dto\Invoice;
+use Vanvo\NavInvoiceXml\InvoiceCollection;
+use Vanvo\NavInvoiceXml\AddressXml;
+use Vanvo\NavInvoiceXml\InvoiceItemXml;
+use Vanvo\NavInvoiceXml\InvoiceXml;
+use Vanvo\NavInvoiceXml\MiscXml;
+use Vanvo\NavInvoiceXml\PartnerXml;
+use Vanvo\NavInvoiceXml\PriceSummaryXml;
+use Vanvo\NavInvoiceXml\VatSummaryXml;
+use Vanvo\NavInvoiceXml\Xml;
 
 class Export extends Xml
 {
-    /** @var ExportEntryCollection */
-    protected $exportEntries;
+    /** @var InvoiceCollection */
+    protected $invoiceCollection;
 
     /**
      * Export constructor.
      *
-     * @param ExportEntryCollection $exportEntries
+     * @param InvoiceCollection $invoiceCollection
      */
-    public function __construct(ExportEntryCollection $exportEntries)
+    public function __construct(InvoiceCollection $invoiceCollection)
     {
-        $this->exportEntries = $exportEntries;
+        parent::__construct();
+
+        $this->invoiceCollection = $invoiceCollection;
     }
 
     public function build(): self
     {
-        $this->append('<?xml version="1.0" encoding="UTF-8"?>');
+        $invoices = $this->createElement('szamlak');
 
-        /** @var ExportEntry $entry */
-        foreach ($this->exportEntries as $entry) {
-            $this->append('<szamla>');
+        foreach ($this->invoiceCollection as $invoice) {
+            $invoiceNode = $this->createElement('szamla');
+            $invoices->appendChild($invoiceNode);
 
-            $this->append((new InvoiceXml($entry->getInvoice()))->getXml());
+            $this->merge($invoiceNode, InvoiceXml::createXml($invoice));
 
-            $this->append('<szamlakibocsato>');
-            $this->append((new PartnerXml($entry->getIssuer()))->getXml());
-            $this->append((new AddressXml($entry->getIssuerAddress()))->getXml());
-            $this->append('</szamlakibocsato>');
-
-            $this->append('<vevo>');
-            $this->append((new PartnerXml($entry->getCustomer()))->getXml());
-            $this->append((new AddressXml($entry->getCustomerAddress()))->getXml());
-            $this->append('</vevo>');
+            $issuerNode = $this->createElement('szamlakibocsato');
 
 
-            foreach ($entry->getInvoiceItems() as $item) {
-                $this->append((new InvoiceItemXml($item))->getXml());
+            $this->merge($issuerNode, PartnerXml::createXml($invoice->getIssuer()));
+            $this->merge($issuerNode, AddressXml::createXml($invoice->getIssuer()->getAddress()));
+            $invoiceNode->appendChild($issuerNode);
+
+            $customerNode = $this->createElement('vevo');
+            $this->merge($customerNode, PartnerXml::createXml($invoice->getCustomer()));
+            $this->merge($customerNode, AddressXml::createXml($invoice->getCustomer()->getAddress()));
+            $invoiceNode->appendChild($customerNode);
+
+            foreach ($invoice->getInvoiceItems() as $item) {
+                $this->merge($invoiceNode, InvoiceItemXml::createXml($item));
             }
 
-            $this->append((new MiscXml($entry->getMisc()))->getXml());
+            $this->merge($invoiceNode, MiscXml::createXml($invoice->getMisc()));
 
-            foreach ($entry->getVatSummaries() as $vatSummary) {
-                $this->append((new VatSummaryXml($vatSummary))->getXml());
+            $totalsNode = $this->createElement('osszesites');
+
+            foreach ($invoice->getVatSummaries() as $vatSummary) {
+                $this->merge($totalsNode, VatSummaryXml::createXml($vatSummary));
             }
 
-            $this->append((new PriceSummaryXml($entry->getPriceSummary()))->getXml());
+            $this->merge($totalsNode, PriceSummaryXml::createXml($invoice->getPriceSummary()));
 
-            $this->append('</szamla>');
+            $invoiceNode->appendChild($totalsNode);
         }
 
         $exportDate = (new \DateTime())->format('Y-m-d');
-        /** @var ExportEntry $firstItem */
-        $firstItem = $this->exportEntries->first();
-        $lastItem  = $this->exportEntries->last();
+        /** @var Invoice $firstItem */
+        $firstItem = $this->invoiceCollection->first();
+        $lastItem  = $this->invoiceCollection->last();
 
-        $this->append('<szamlak xmlns="http://schemas.nav.gov.hu/2013/szamla">');
-        $this->append("<export_datuma>{$exportDate}</export_datuma>");
-        $this->append("<export_szla_db>{$this->exportEntries->count()}</export_szla_db>");
-        $this->append("<kezdo_ido>{$firstItem->getInvoice()->getIssuedOn()->format('Y-m-d')}</kezdo_ido>");
-        $this->append("<zaro_ido>{$lastItem->getInvoice()->getIssuedOn()->format('Y-m-d')}</zaro_ido>");
-        $this->append("<kezdo_szla_szam>{$firstItem->getInvoice()->getNumber()}</kezdo_szla_szam>");
-        $this->append("<zaro_szla_szam>{$lastItem->getInvoice()->getNumber()}</zaro_szla_szam>");
-        $this->append('</szamlak>');
+
+        $this->insert($invoices, $this->createElement('export_datuma', $exportDate), 0);
+        $this->insert($invoices, $this->createElement('export_szla_db', $this->invoiceCollection->count()), 1);
+        $this->insert($invoices, $this->createElement('kezdo_ido', $firstItem->getIssuedOn()->format('Y-m-d')), 2);
+        $this->insert($invoices, $this->createElement('zaro_ido', $lastItem->getIssuedOn()->format('Y-m-d')), 3);
+        $this->insert($invoices, $this->createElement('kezdo_szla_szam', $firstItem->getNumber()), 4);
+        $this->insert($invoices, $this->createElement('zaro_szla_szam', $lastItem->getNumber()), 5);
+
+        $this->doc->appendChild($invoices);
 
         return $this;
+    }
+
+    private function insert(\DOMElement $invoices, \DOMElement $element, int $index): void
+    {
+        $invoices->insertBefore($element, $invoices->childNodes->item($index));
     }
 }

@@ -13,7 +13,7 @@ namespace Vanvo\NavInvoiceXml\Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
 use Vanvo\NavInvoiceXml\Dto\PriceSummary;
-use Vanvo\NavInvoiceXml\Models\Xml\PriceSummaryXml;
+use Vanvo\NavInvoiceXml\PriceSummaryXml;
 
 class PriceSummaryTest extends TestCase
 {
@@ -28,10 +28,10 @@ class PriceSummaryTest extends TestCase
             11.22
         );
 
-        $xml = new PriceSummaryXml($priceSummary);
+        $xml = PriceSummaryXml::createXml($priceSummary)->getDocument()->saveXML();
 
-        $this->assertContains('<nettoar>12</nettoar>', $xml->getXml());
-        $this->assertContains('<afaertekossz>14.5</afaertekossz>', $xml->getXml());
-        $this->assertContains('<bruttoarossz>11.22</bruttoarossz>', $xml->getXml());
+        $this->assertContains('<nettoarossz>12</nettoarossz>', $xml);
+        $this->assertContains('<afaertekossz>14.5</afaertekossz>', $xml);
+        $this->assertContains('<bruttoarossz>11.22</bruttoarossz>', $xml);
     }
 }

@@ -9,7 +9,7 @@
  *
  */
 
-namespace Vanvo\NavInvoiceXml\Models;
+namespace Vanvo\NavInvoiceXml;
 
 class Collection implements \IteratorAggregate
 {

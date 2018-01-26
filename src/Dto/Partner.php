@@ -19,21 +19,26 @@ class Partner
     /** @var string */
     protected $taxNumber;
 
-    /** @var string */
+    /** @var string|null */
     protected $taxNumberIntl;
+
+    /** @var Address */
+    protected $address;
 
     /**
      * Partner constructor.
      *
-     * @param string $name
-     * @param string $taxNumber
-     * @param string $taxNumberIntl
+     * @param string      $name
+     * @param string      $taxNumber
+     * @param null|string $taxNumberIntl
+     * @param Address     $address
      */
-    public function __construct(string $name, string $taxNumber, string $taxNumberIntl = null)
+    public function __construct(string $name, string $taxNumber, ?string $taxNumberIntl, Address $address)
     {
         $this->name          = $name;
         $this->taxNumber     = $taxNumber;
         $this->taxNumberIntl = $taxNumberIntl;
+        $this->address       = $address;
     }
 
     /**
@@ -53,10 +58,18 @@ class Partner
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getTaxNumberIntl(): ?string
     {
         return $this->taxNumberIntl;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getAddress(): Address
+    {
+        return $this->address;
     }
 }

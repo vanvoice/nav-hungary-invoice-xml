@@ -9,7 +9,7 @@
  *
  */
 
-namespace Vanvo\NavInvoiceXml\Models;
+namespace Vanvo\NavInvoiceXml;
 
 use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
 

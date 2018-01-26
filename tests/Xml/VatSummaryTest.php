@@ -13,7 +13,7 @@ namespace Vanvo\NavInvoiceXml\Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
 use Vanvo\NavInvoiceXml\Dto\VatSummary;
-use Vanvo\NavInvoiceXml\Models\Xml\VatSummaryXml;
+use Vanvo\NavInvoiceXml\VatSummaryXml;
 
 class VatSummaryTest extends TestCase
 {
@@ -29,11 +29,11 @@ class VatSummaryTest extends TestCase
             11.22
         );
 
-        $xml = new VatSummaryXml($vatSummary);
+        $xml = VatSummaryXml::createXml($vatSummary)->getDocument()->saveXML();
 
-        $this->assertContains('<adokulcs>2</adokulcs>', $xml->getXml());
-        $this->assertContains('<nettoar>12</nettoar>', $xml->getXml());
-        $this->assertContains('<afaertekossz>14.5</afaertekossz>', $xml->getXml());
-        $this->assertContains('<bruttoarossz>11.22</bruttoarossz>', $xml->getXml());
+        $this->assertContains('<adokulcs>2</adokulcs>', $xml);
+        $this->assertContains('<nettoar>12</nettoar>', $xml);
+        $this->assertContains('<adoertek>14.5</adoertek>', $xml);
+        $this->assertContains('<bruttoar>11.22</bruttoar>', $xml);
     }
 }

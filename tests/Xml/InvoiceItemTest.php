@@ -13,7 +13,7 @@ namespace Konekt\NavInvoiceXml\Tests\Xml;
 
 use PHPUnit\Framework\TestCase;
 use Vanvo\NavInvoiceXml\Dto\InvoiceItem;
-use Vanvo\NavInvoiceXml\Models\Xml\InvoiceItemXml;
+use Vanvo\NavInvoiceXml\InvoiceItemXml;
 
 class InvoiceItemTest extends TestCase
 {
@@ -31,20 +31,20 @@ class InvoiceItemTest extends TestCase
             1.2,
             8,
             2.2,
-            12.45,
+            12.445,
             2
         );
 
-        $xml = new InvoiceItemXml($invoiceItem);
+        $xml = InvoiceItemXml::createXml($invoiceItem)->getDocument()->saveXML();
 
-        $this->assertContains('<termeknev>Palacsinta</termeknev>', $xml->getXml());
-        $this->assertContains('<besorszam>2</besorszam>', $xml->getXml());
-        $this->assertContains('<menny>5.5</menny>', $xml->getXml());
-        $this->assertContains('<mertekegys>l</mertekegys>', $xml->getXml());
-        $this->assertContains('<nettoegysar>1.2</nettoegysar>', $xml->getXml());
-        $this->assertContains('<nettoar>8</nettoar>', $xml->getXml());
-        $this->assertContains('<bruttoar>12.45</bruttoar>', $xml->getXml());
-        $this->assertContains('<adoertek>2.2</adoertek>', $xml->getXml());
-        $this->assertContains('<adokulcs>2</adokulcs>', $xml->getXml());
+        $this->assertContains('<termeknev>Palacsinta</termeknev>', $xml);
+        $this->assertContains('<besorszam>2</besorszam>', $xml);
+        $this->assertContains('<menny>5.5</menny>', $xml);
+        $this->assertContains('<mertekegys>l</mertekegys>', $xml);
+        $this->assertContains('<nettoegysar>1.2</nettoegysar>', $xml);
+        $this->assertContains('<nettoar>8</nettoar>', $xml);
+        $this->assertContains('<bruttoar>12.45</bruttoar>', $xml);
+        $this->assertContains('<adoertek>2.2</adoertek>', $xml);
+        $this->assertContains('<adokulcs>2</adokulcs>', $xml);
     }
 }

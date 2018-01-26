@@ -9,7 +9,7 @@
  *
  */
 
-namespace Vanvo\NavInvoiceXml\Models\Xml;
+namespace Vanvo\NavInvoiceXml;
 
 use Vanvo\NavInvoiceXml\Dto\Partner;
 
@@ -17,8 +17,12 @@ class PartnerXml extends Xml
 {
     public function __construct(Partner $partner)
     {
-        $this->append("<adoszam>{$partner->getTaxNumber()}</adoszam>");
-        $this->append("<kozadoszam>{$partner->getTaxNumberIntl()}</kozadoszam>");
-        $this->append("<nev>{$partner->getName()}</nev>");
+        parent::__construct();
+
+        $this->add('adoszam', $partner->getTaxNumber());
+        if ($partner->getTaxNumberIntl()) {
+            $this->add('kozadoszam', $partner->getTaxNumberIntl());
+        }
+        $this->add('nev', $partner->getName());
     }
 }
